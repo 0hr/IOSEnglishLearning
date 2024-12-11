@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+
 @main
 struct SmartEnglishLearningApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            WelcomeView()
         }
     }
 }
