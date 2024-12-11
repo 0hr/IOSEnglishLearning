@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="24B83" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="PlacementOptions" representedClassName="PlacementOptionsMO" syncable="YES" codeGenerationType="class">
+        <attribute name="option" optional="YES" attributeType="String"/>
+        <relationship name="questions" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlacementQuestions" inverseName="answers" inverseEntity="PlacementQuestions"/>
+    </entity>
+    <entity name="PlacementQuestions" representedClassName="PlacementQuestionsMo" syncable="YES" codeGenerationType="class">
+        <attribute name="answer" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="question" optional="YES" attributeType="String"/>
+        <relationship name="answers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PlacementOptions" inverseName="questions" inverseEntity="PlacementOptions"/>
+    </entity>
+</model>

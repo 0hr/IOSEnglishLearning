@@ -1,0 +1,142 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld%%" : {
+
+    },
+    "Already have an account?" : {
+
+    },
+    "Back to Login" : {
+
+    },
+    "Choose another level" : {
+
+    },
+    "Choose your level" : {
+
+    },
+    "Close" : {
+
+    },
+    "Continue" : {
+
+    },
+    "Create Account" : {
+
+    },
+    "Don't have an account?" : {
+
+    },
+    "Email" : {
+
+    },
+    "English" : {
+
+    },
+    "Enter 6-digit code" : {
+
+    },
+    "Enter your email" : {
+
+    },
+    "Enter your password" : {
+
+    },
+    "Example:" : {
+
+    },
+    "Flash Cards" : {
+
+    },
+    "Forgot Password?" : {
+
+    },
+    "Harun!" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "I agree to the " : {
+
+    },
+    "Improve your english every day!" : {
+
+    },
+    "Learn" : {
+
+    },
+    "Next" : {
+
+    },
+    "No more cards!" : {
+
+    },
+    "Not Sure? Take Placement Test" : {
+
+    },
+    "Password" : {
+
+    },
+    "Password Requirements:" : {
+
+    },
+    "Practice" : {
+
+    },
+    "Quiz Completed!" : {
+
+    },
+    "Resend Code" : {
+
+    },
+    "Resend in %llds" : {
+
+    },
+    "Select the level you want to practice" : {
+
+    },
+    "Sign In" : {
+
+    },
+    "Sign up" : {
+
+    },
+    "Sign Up" : {
+
+    },
+    "Similar Words" : {
+
+    },
+    "Smart" : {
+
+    },
+    "Take A Quiz" : {
+
+    },
+    "Terms & Conditions" : {
+
+    },
+    "Verification Code" : {
+
+    },
+    "What do we learn today?" : {
+
+    },
+    "You got %lld out of %lld correct." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "You got %1$lld out of %2$lld correct."
+          }
+        }
+      }
+    },
+    "Your Skills" : {
+
+    }
+  },
+  "version" : "1.0"
+}
