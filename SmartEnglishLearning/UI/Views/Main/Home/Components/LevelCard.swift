@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LevelCard: View {
     let level: CEFRLevel
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {

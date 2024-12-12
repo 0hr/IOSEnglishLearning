@@ -10,9 +10,13 @@ import ConfettiSwiftUI
 
 struct LevelChooseView: View {
     private let levels: [CEFRLevel] = [.a1, .a2, .b1, .b2, .c1]
+    
     @State private var counter: Int = 0
     @Binding public var navigationPath: NavigationPath
     @State private var selectedLevel: CEFRLevel? = nil
+    
+    @Binding public var level: String
+    
     var body: some View {
         ZStack {
             
@@ -31,6 +35,7 @@ struct LevelChooseView: View {
                         ForEach(levels, id: \.self) { level in
                             Button(action: {
                                 selectedLevel = level
+                                self.level = level.rawValue
                                 counter += 1
                             }) {
                                 
@@ -90,7 +95,7 @@ struct LevelChooseView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var previewNavigationPath = NavigationPath()
-    LevelChooseView(navigationPath: $previewNavigationPath)
-}
+//#Preview {
+//    @Previewable @State var previewNavigationPath = NavigationPath()
+//    LevelChooseView(navigationPath: $previewNavigationPath)
+//}

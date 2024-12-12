@@ -23,6 +23,12 @@ struct ContentView: View {
                     Text("Flash Cards")
                 }
                 .tag(1)
+            SpeakingPracticeView()
+                .tabItem {
+                    Image(systemName: "message")
+                    Text("Chat")
+                }
+                .tag(2)
         }
         .onAppear() {
             UITabBar.appearance().barTintColor = .white

@@ -1,5 +1,5 @@
 {
-  "originHash" : "6ad1e0d3ae43bde33043d3286afc3d98e5be09945ac257218cb6a9dba14466c3",
+  "originHash" : "9432f177dca5c6864ed278dfe020869d3a9c064cfd31e47a9a46ef3d1a915f17",
   "pins" : [
     {
       "identity" : "confettiswiftui",
@@ -8,6 +8,24 @@
       "state" : {
         "revision" : "f45961f97bbae6fff6e2e64546fea0189425ad92",
         "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "ffmpegkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kingslay/FFmpegKit.git",
+      "state" : {
+        "revision" : "85b77c589de0360c111de16752db86b60496d70b",
+        "version" : "6.1.3"
+      }
+    },
+    {
+      "identity" : "ksplayer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kingslay/KSPlayer",
+      "state" : {
+        "revision" : "4540c3fcc4f2d3acc4a05c02d995d41b5568e963",
+        "version" : "2.3.3"
       }
     }
   ],

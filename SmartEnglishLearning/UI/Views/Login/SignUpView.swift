@@ -9,10 +9,8 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    // Form fields
-    @State private var fullName = ""
-    @State private var email = ""
-    @State private var password = ""
+    // Form Fields
+    @StateObject private var signUpViewModel = SignUpViewModel()
     @State private var confirmPassword = ""
     
     // UI States
@@ -24,6 +22,8 @@ struct SignUpView: View {
     @State private var errorMessage = ""
     @State private var acceptedTerms = false
     @Binding public var navigationPath: NavigationPath
+
+    @Binding public var level: String
     
     var body: some View {
         GeometryReader { geometry in
@@ -56,20 +56,23 @@ struct SignUpView: View {
                             FormField(icon: "person.fill",
                                       title: "Full Name",
                                       placeholder: "Enter your full name",
-                                      text: $fullName)
+                                      text: $signUpViewModel.name
+                            )
                             
                             // Email Field
                             FormField(icon: "envelope.fill",
                                       title: "Email",
                                       placeholder: "Enter your email",
-                                      text: $email,
-                                      keyboardType: .emailAddress)
+                                      text: $signUpViewModel.email,
+                                      keyboardType: .emailAddress
+                            )
                             
                             // Password Field
                             PasswordField(title: "Password",
                                           placeholder: "Create password",
-                                          password: $password,
-                                          showPassword: $showPassword)
+                                          password: $signUpViewModel.password,
+                                          showPassword: $showPassword
+                            )
                             
                             // Confirm Password Field
                             PasswordField(title: "Confirm Password",
@@ -78,8 +81,8 @@ struct SignUpView: View {
                                           showPassword: $showConfirmPassword)
                             
                             // Password Requirements
-                            if !password.isEmpty {
-                                PasswordRequirements(password: password)
+                            if !signUpViewModel.password.isEmpty {
+                                PasswordRequirements(password: signUpViewModel.password)
                                     .transition(.opacity)
                             }
                             
@@ -144,17 +147,20 @@ struct SignUpView: View {
             }
             .onAppear {
                 isAnimating = true
+                print(level)
+                signUpViewModel.level = level
+                print(signUpViewModel.level)
             }
         }.navigationBarBackButtonHidden()
     }
     
     private var isFormValid: Bool {
-        !fullName.isEmpty &&
-        !email.isEmpty &&
-        password.count >= 8 &&
-        password == confirmPassword &&
+        !signUpViewModel.name.isEmpty &&
+        !signUpViewModel.email.isEmpty &&
+        signUpViewModel.password.count >= 8 &&
+        signUpViewModel.password == confirmPassword &&
         acceptedTerms &&
-        isValidEmail(email)
+        isValidEmail(signUpViewModel.email)
     }
     
     private func handleSignUp() {
@@ -166,10 +172,15 @@ struct SignUpView: View {
         
         isLoading = true
         
-        // Simulate network request
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            isLoading = false
-            // Handle actual sign up logic here
+        print(level)
+        signUpViewModel.signUp { success in
+            if success {
+                isLoading = false
+            } else {
+                isLoading = false
+                showError = true
+                errorMessage = signUpViewModel.error
+            }
         }
     }
     
@@ -280,7 +291,7 @@ struct RequirementRow: View {
     }
 }
 
-#Preview {
-    @Previewable @State var previewNavigationPath = NavigationPath()
-    SignUpView(navigationPath: $previewNavigationPath)
-}
+//#Preview {
+//    @Previewable @State var previewNavigationPath = NavigationPath()
+//    SignUpView(navigationPath: $previewNavigationPath)
+//}
