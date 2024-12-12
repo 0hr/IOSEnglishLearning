@@ -9,12 +9,13 @@ import SwiftUI
 import Charts
 
 struct HomeView: View {
+    @ObservedObject var viewModel = HomeViewModel()
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 14, pinnedViews: [.sectionHeaders]) {
                 Section {
                     LevelCard(
-                        level: CEFRLevel(rawValue: "a1".lowercased()) ?? CEFRLevel.a1
+                        level: CEFRLevel(rawValue: viewModel.userLevel?.lowercased() ?? "a1") ?? CEFRLevel.a1
                     )
                     
                     

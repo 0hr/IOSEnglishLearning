@@ -31,7 +31,7 @@ struct LoginWithEmailView: View {
                                 navigationPath.append(Routes.forgotPassword)
                             },
                             onSignUp: {
-                                navigationPath.append(Routes.signup)
+                                navigationPath.append(Routes.chooseLevel)
                             },
                             email: $email,
                             password: $password,

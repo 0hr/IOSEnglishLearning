@@ -1,72 +1,7 @@
 import SwiftUI
+import ConfettiSwiftUI
 
-struct Question {
-    let text: String
-    let options: [String]
-    let correctIndex: Int
-}
-
-extension Question {
-    static let questions: [Question] = [
-        Question(
-            text: "concerned",
-            options: ["familiar", "worried", "careless", "unable"],
-            correctIndex: 1
-        ),
-        Question(
-            text: "express",
-            options: ["state", "offer", "inspect", "measure"],
-            correctIndex: 0
-        ),
-        Question(
-            text: "One huge _____ of working with a personal trainer is getting faster and better results.",
-            options: ["conclusion", "prediction", "benefit", "influence"],
-            correctIndex: 2
-        ),
-        Question(
-            text: "The team members are expected to actively _____ in the decision making process.",
-            options: ["permit", "occur", "persuade", "participate"],
-            correctIndex: 3
-        ),
-        Question(
-            text: "widespread",
-            options: ["significant", "various", "protective", "common"],
-            correctIndex: 3
-        ),
-        Question(
-            text: "perceive",
-            options: ["understand", "force", "emphasize", "target"],
-            correctIndex: 0
-        ),
-        Question(
-            text: "Increasing plastic use during the pandemic poses a great _____ to the environment.",
-            options: ["target", "innovation", "threat", "conflict"],
-            correctIndex: 3
-        ),
-        Question(
-            text: "People from many different areas came together to _____ a common goal.",
-            options: ["attend", "pursue", "release", "inspire"],
-            correctIndex: 1
-        ),
-        Question(
-            text: "a plan or an idea that a person wants to follow",
-            options: ["invasion", "rebellion", "intention", "duration"],
-            correctIndex: 2
-        ),
-        Question(
-            text: "attain",
-            options: ["encounter", "accomplish", "pretend", "exploit"],
-            correctIndex: 1
-        ),
-        Question(
-            text: "There was an open _____ between the two groups in the school, which eventually led to a huge fight.",
-            options: ["intervention", "privilege", "hostility", "incentive"],
-            correctIndex: 2
-        ),
-    ]
-}
 struct QuizView: View {
-    
     @State private var currentIndex: Int = 0
     @State private var correctAnswersCount: Int = 0
     
@@ -78,7 +13,11 @@ struct QuizView: View {
     
     @Binding public var navigationPath: NavigationPath
     
-    @State private var questions = Question.questions
+    @Binding public var questions: [Question]
+    
+    @Binding public var level: String
+    
+    @State private var counter: Int = 0
     
     var body: some View {
         ZStack {
@@ -91,7 +30,8 @@ struct QuizView: View {
                 VStack(spacing: 20) {
                     HStack {
                   
-                        ProgressView(value: Double(currentIndex), total: Double(questions.count)).tint(Theme.purple)
+                        ProgressView(value: Double(currentIndex), total: Double(questions.count))
+                            .tint(Theme.purple)
                         
                         Button(action: {
                             navigationPath.append(Routes.chooseLevel)
@@ -105,7 +45,7 @@ struct QuizView: View {
                     .padding([.horizontal, .top])
                     
                     Spacer()
-                    Text(Question.questions[currentIndex].text)
+                    Text(questions[currentIndex].questionText)
                         .font(.title2)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.center)
@@ -146,14 +86,15 @@ struct QuizView: View {
                 .offset(x: isTransitioning ? 50 : 0)
                 .animation(.easeInOut(duration: 0.3), value: isTransitioning)
             }
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
     }
 
 
     func answerButton(for index: Int) -> some View {
-        let option = Question.questions[currentIndex].options[index]
+        let option = questions[currentIndex].options[index]
         let isSelected = index == selectedAnswerIndex
-        let isCorrectOption = index == Question.questions[currentIndex].correctIndex
+        let isCorrectOption = index == questions[currentIndex].correctOptionIndex
         
         let backgroundColor: Color = {
             if let correct = isAnswerCorrect {
@@ -196,7 +137,7 @@ struct QuizView: View {
     
     // MARK: - Check Answer
     func checkAnswer(selected index: Int) {
-        let correctIndex = questions[currentIndex].correctIndex
+        let correctIndex = questions[currentIndex].correctOptionIndex
         if index == correctIndex {
             isAnswerCorrect = true
             correctAnswersCount += 1 // Increment correct answers count
@@ -233,13 +174,23 @@ struct QuizView: View {
     }
     
     var resultOverlay: some View {
+        
+       
         VStack(spacing: 30) {
+            ConfettiCannon(counter: $counter, num: 50, radius: 300.0)
+            
+           
             Text("Quiz Completed!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
             
             Text("You got \(correctAnswersCount) out of \(questions.count) correct.")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            
+            Text("Your level is \(CEFRLevel(rawValue: level) ?? CEFRLevel.a1)")
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
@@ -255,12 +206,35 @@ struct QuizView: View {
                     .background(Theme.purple)
                     .cornerRadius(8)
             }
+        }.onAppear()
+        {
+            level = getLevel()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                counter += 1
+            }
         }
         .padding()
+    }
+    
+    func getLevel() -> String {
+        switch correctAnswersCount {
+            case 0..<5:
+                return "a1"
+            case 5..<10:
+                return "a2"
+            case 10..<15:
+                return "b1"
+            case 15..<20:
+                return "b2"
+            default:
+                return "c1"
+        }
     }
 }
 
 #Preview {
     @Previewable @State var previewNavigationPath = NavigationPath()
-    QuizView(navigationPath: $previewNavigationPath)
+    @Previewable @State var questions: [Question] = Question.mockQuestions()
+    @Previewable @State var level: String = ""
+    QuizView(navigationPath: $previewNavigationPath, questions: $questions, level: $level)
 }
